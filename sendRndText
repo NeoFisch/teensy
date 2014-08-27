@@ -1,0 +1,72 @@
+/* Used Serial Monitor Example, Teensyduino Tutorial #3
+   http://www.pjrc.com/teensy/tutorial3.html
+
+	 and inspirations came from:
+	 http://makezine.com/projects/make-32/the-awesome-button/
+	 http://makezine.com/2011/04/08/the-awesome-button/
+	 
+	 Uses 38400 baud connection via USB
+	 simulates Keyboard and sends three different words randomly to the client PC
+*/
+
+const byte NUMBER_OF_WORDS = 3;
+const int internLedPin = 13;
+const int SHORT = 1;
+const int LONG = 2;
+
+char* names[NUMBER_OF_WORDS] = {
+  "super", "toll", "wunderbar"
+};
+
+void blinkInternLed (int times = 1, const int range = SHORT) {
+  
+    int sleepTime = 500;
+    
+    switch (range) {
+      case SHORT:
+          sleepTime = 500;
+          break;
+          
+       case LONG:   
+         sleepTime = 1000;
+         break;
+        
+       default:
+          sleepTime = 500;
+          break;
+    }
+  
+  while (times) {
+    digitalWrite(internLedPin, HIGH);
+    delay(sleepTime);    
+    digitalWrite(internLedPin, LOW);
+    delay(sleepTime);
+    times--;
+  }
+}
+
+void setup()   {
+  pinMode(internLedPin, OUTPUT);
+  blinkInternLed(1, SHORT);
+  delay(2500);
+  blinkInternLed(2, SHORT);
+  Keyboard.set_modifier(MODIFIERKEY_SHIFT);  
+  Keyboard.set_modifier(0);
+  Serial.begin(38400);  //9600 baud
+//  randomSeed(analogRead(0));
+  pinMode(12, INPUT_PULLUP);
+  delay(2500);
+  blinkInternLed(3, SHORT);
+}
+
+void loop()                     
+{
+  if (digitalRead(12) == LOW)
+  {
+    blinkInternLed(1, SHORT);
+    Keyboard.print(names[random(0,NUMBER_OF_WORDS)]);
+    Keyboard.print(" ");
+    //delay(250);
+    delay(1);
+  }
+}
