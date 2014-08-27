@@ -1,12 +1,16 @@
-/* Used Serial Monitor Example, Teensyduino Tutorial #3
+/* Serial Monitor Example, Teensyduino Tutorial #3
    http://www.pjrc.com/teensy/tutorial3.html
 
-	 and inspirations came from:
-	 http://makezine.com/projects/make-32/the-awesome-button/
-	 http://makezine.com/2011/04/08/the-awesome-button/
-	 
-	 Uses 38400 baud connection via USB
-	 simulates Keyboard and sends three different words randomly to the client PC
+   After uploading this to your board, use Serial Monitor
+   to view the message.  When Serial is selected from the
+   Tools > USB Type menu, the correct serial port must be
+   selected from the Tools > Serial Port AFTER Teensy is
+   running this code.  Teensy only becomes a serial device
+   while this code is running!  For non-Serial types,
+   the Serial port is emulated, so no port needs to be
+   selected.
+
+   This example code is in the public domain.
 */
 
 const byte NUMBER_OF_WORDS = 3;
@@ -49,12 +53,12 @@ void setup()   {
   pinMode(internLedPin, OUTPUT);
   blinkInternLed(1, SHORT);
   delay(2500);
+  // intialization for MacOS to identify keyboard - if not working close the init dialog on MacOS system
   blinkInternLed(2, SHORT);
   Keyboard.set_modifier(MODIFIERKEY_SHIFT);  
   Keyboard.set_modifier(0);
   Serial.begin(38400);  //9600 baud
-//  randomSeed(analogRead(0));
-  pinMode(12, INPUT_PULLUP);
+  pinMode(12, INPUT_PULLUP); // INPUT_PULLUP serves to pull the voltage back up when you are not pressing the button. You can activate the pullup resistor by using INPUT_PULLUP with pinMode in your setup function.
   delay(2500);
   blinkInternLed(3, SHORT);
 }
@@ -63,9 +67,13 @@ void loop()
 {
   if (digitalRead(12) == LOW)
   {
+    Serial.println("Button pressed!!!");
     blinkInternLed(1, SHORT);
-    Keyboard.print(names[random(0,NUMBER_OF_WORDS)]);
+    int randNo = random(0,NUMBER_OF_WORDS);
+    Keyboard.print(names[randNo]);
     Keyboard.print(" ");
+    Serial.print("Random number was: ");  // here you could debug with serial monitor
+    Serial.println(randNo);
     //delay(250);
     delay(1);
   }
