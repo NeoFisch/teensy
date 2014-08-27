@@ -1,16 +1,12 @@
-/* Serial Monitor Example, Teensyduino Tutorial #3
+/* Used Serial Monitor Example, Teensyduino Tutorial #3
    http://www.pjrc.com/teensy/tutorial3.html
 
-   After uploading this to your board, use Serial Monitor
-   to view the message.  When Serial is selected from the
-   Tools > USB Type menu, the correct serial port must be
-   selected from the Tools > Serial Port AFTER Teensy is
-   running this code.  Teensy only becomes a serial device
-   while this code is running!  For non-Serial types,
-   the Serial port is emulated, so no port needs to be
-   selected.
-
-   This example code is in the public domain.
+	 and inspirations came from:
+	 http://makezine.com/projects/make-32/the-awesome-button/
+	 http://makezine.com/2011/04/08/the-awesome-button/
+	 
+	 Uses 38400 baud connection via USB
+	 simulates Keyboard and sends three different words randomly to the client PC
 */
 
 const byte NUMBER_OF_WORDS = 3;
