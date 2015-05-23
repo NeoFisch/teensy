@@ -25,8 +25,8 @@ const unsigned int INSENSITY_VERY_BRIGHT = 255;
 const unsigned int FADE_INSTENSITY_STEPS = 40;  // steps for fading
 const unsigned int FADE_INSTENSITY_DELAY = 100;  // delay for fading
 
-const long int FOTO_SHOOT_DELAY_IN_SEC = 10;   // 2 sec ==  2000ms   and     45000ms == 45 sec
-const long int PRINT_OUT_DELAY_IN_SEC = 5;
+const long int FOTO_SHOOT_DELAY_IN_SEC = 30;   // 2 sec ==  2000ms   and     45000ms == 45 sec
+const long int PRINT_OUT_DELAY_IN_SEC = 41; //301
 
 const unsigned int BLINK_PRINT_LED_DELAY = 500;
 
@@ -192,7 +192,10 @@ void loop()
     Serial.println("Button pressed!!!");
     blinkInternLed(1, SHORT);
     // output simulate space bar pressed
-    Keyboard.print(" ");
+    //Keyboard.print(" ");
+    // output simulate Enter/Return key press
+    Keyboard.press(KEY_RETURN);
+    Keyboard.releaseAll();
     blinkAnalogOutputLed(INTERN_ANALOG_PIN_LED_BUTTON, 1, SUPER_SHORT, INSENSITY_VERY_BRIGHT, INSENSITY_VERY_BRIGHT, INSENSITY_OFF);
     //analogWrite(INTERN_ANALOG_PIN_LED_BUTTON, INSENSITY_OFF);
     //digitalWrite(INTERN_ANALOG_PIN_LED_BUTTON, LOW);  // shut the led completly off
